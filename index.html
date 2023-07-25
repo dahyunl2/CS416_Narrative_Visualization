@@ -12,14 +12,19 @@
     <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart.html';">Gun Death Rate by year in Illinois</button>
 </div>
 <div id="text">
-    <p1>hello</p1>
+    <p>Data from https://worldpopulationreview.com/country-rankings/gun-deaths-by-country</p>
+    <p>According to the trend of number of death related to gun has been increased dramatically in a decade.<br>
+      Firstly in these series of charts, we are examinate where U.S. gun death number is in world scale.<br>
+      To narrow down into Domestic scale, click [Top 10 States in U.S.] button.<br>
+      Lastly, you can focuse on Illinois among other states in U.S by clicking [Gun Death Rate by year in Illinois] button. 
+    </p>
 </div>
 
 
 <!-- Create a div where the graph will take place -->
 
 <div id="my_dataviz"></div>
-<style>
+<!-- <style>
     #tooltip{
         opacity:0;
         position: absolute;
@@ -29,7 +34,7 @@
         background: white;
         border: 0px;
     }
-</style>
+</style> -->
 <body>
 <script>
 
@@ -69,7 +74,18 @@
         .call(d3.axisLeft(y))
 
     // create a tooltip
-    var tooltip=d3.select('#tooltip');
+    var tooltip = d3.select("#my_dataviz")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("position", 'absolute')
+    .style('text-align','center')
+    .style('width','200px')
+    .style('height','40px')
+    .style("background-color", "white")
+    .style("border", "solid")
+    .style("border-width", "1px")
+    .style("border-radius", "5px")
 
 
     // Three function that change the tooltip when user hover / move / leave a cell
@@ -90,13 +106,15 @@
                 return 'lightblue'
             }
           })
-        .on('mouseover', function(d){
-            tooltip.style('opacity',1)
-            .style('left',(d.pageX)+'px')
-            .style('top',(d.pageY)+'px')
-            .html('Country: '+d.Country+'\nTotal Death: '+d.Value);
+        .on('mouseover', function(event, d){
+          tooltip
+          .style("opacity", 1)
+          .html("Country: " + d.Country+ "<br>Total Death: "+d.Value)
+          .style("left", (d3.pointer(event,this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+          .style("top", (d3.pointer(event,this)[1]+300) + "px")
+            console.log(d);
         })
-        .on('mouseout',function(){tooltip.style('opacity',0)})
+        .on('mouseout',function(event, d){tooltip.style('opacity',0)})
         
         //svg.select('rect').filter().attr('fill','red');
         // svg.selectAll('rect:nth-child(2)').attr('fill','red');
