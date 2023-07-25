@@ -34,13 +34,13 @@
     d3.csv("https://raw.githubusercontent.com/dahyunl2/CS416_Narrative_Visualization/main/illinois.csv",
       // When reading the csv, I must format variables:
       function(d){
-        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+        return { date : d.year, value : d.value }
       }).then(
       // Now I can use this dataset:
       function(data) {
         // Add X axis --> it is a date format
         const x = d3.scaleTime()
-          .domain(d3.extent(data, d => d.date))
+          .domain(d3.extent(data, d => d.year))
           .range([ 0, width ]);
         svg.append("g")
           .attr("transform", "translate(0," + height + ")")
@@ -58,7 +58,7 @@
           .attr("stroke", "#69b3a2")
           .attr("stroke-width", 1.5)
           .attr("d", d3.line()
-            .x(d => x(d.date))
+            .x(d => x(d.year))
             .y(d => y(d.value))
             )
         // Add the points
@@ -67,7 +67,7 @@
           .selectAll("dot")
           .data(data)
           .join("circle")
-            .attr("cx", d => x(d.date))
+            .attr("cx", d => x(d.year))
             .attr("cy", d => y(d.value))
             .attr("r", 5)
             .attr("fill", "#69b3a2")
