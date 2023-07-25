@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<h1>Total Gun Deaths by Country 2023</h1>
+<div id="button">
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/';">Top 10 Country</button>
+    <button onclick="window.location.href='https://w3docs.com';">Top 10 States in U.S.</button>
+    <button onclick="window.location.href='https://w3docs.com';">Total Death by Month in Illinois</button>
+</div>
+<div id="text">
+    <p1>hello</p1>
+</div>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+<body>
+<script>
+
+    // set the dimensions and margins of the graph
+    const width = 450,
+        height = 450,
+        margin = 40;
+    
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    const radius = Math.min(width, height) / 2 - margin
+    
+    // append the svg object to the div called 'my_dataviz'
+    const svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+      .append("g")
+        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+    
+    // Create dummy data
+    const data = {Texas: 4164, California: 3449, Florida:3041, Georgia:1897, Ohio:1764, Pennsylvania:1752,Illinois:1745,NorthCarolina:1699,Tennessee:1473,Michigan:1494}
+    
+    // set the color scale
+    var randomColor = (function(){
+  var golden_ratio_conjugate = 0.618033988749895;
+  var h = Math.random();
+
+  var hslToRgb = function (h, s, l){
+      var r, g, b;
+
+      if(s == 0){
+          r = g = b = l; // achromatic
+      }else{
+          function hue2rgb(p, q, t){
+              if(t < 0) t += 1;
+              if(t > 1) t -= 1;
+              if(t < 1/6) return p + (q - p) * 6 * t;
+              if(t < 1/2) return q;
+              if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+              return p;
+          }
+
+          var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+          var p = 2 * l - q;
+          r = hue2rgb(p, q, h + 1/3);
+          g = hue2rgb(p, q, h);
+          b = hue2rgb(p, q, h - 1/3);
+      }
+
+      return '#'+Math.round(r * 255).toString(16)+Math.round(g * 255).toString(16)+Math.round(b * 255).toString(16);
+  };
+  
+  return function(){
+    h += golden_ratio_conjugate;
+    h %= 1;
+    return hslToRgb(h, 0.5, 0.60);
+  };
+})();
+    // Compute the position of each group on the pie:
+    const pie = d3.pie()
+      .value(function(d) {return d[1]})
+    const data_ready = pie(Object.entries(data))
+    // Now I know that group A goes from 0 degrees to x degrees and so on.
+    
+    // shape helper to build arcs:
+    const arcGenerator = d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius)
+    
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svg
+      .selectAll('mySlices')
+      .data(data_ready)
+      .join('path')
+        .attr('d', arcGenerator)
+        .attr('fill', randomColor)
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("opacity", 0.8)
+    
+    // Now add the annotation. Use the centroid method to get the best coordinates
+    svg
+      .selectAll('mySlices')
+      .data(data_ready)
+      .join('text')
+      .text(function(d){ return d.data[0]})
+      .attr("transform", function(d) { return `translate(${arcGenerator.centroid(d)})`})
+      .style("text-anchor", "middle")
+      .style("font-size", 14)
+    
+      svg.selectAll('mySlices:nth-child(7)').attr("stroke", "red").style("opacity", 1);
+    </script>
+    </body>
+    </html>
