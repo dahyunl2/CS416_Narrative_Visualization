@@ -8,10 +8,10 @@
 <div id="button">
     <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/';">Top 10 Country</button>
     <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/piechart3.html';">Top 10 States in U.S.</button>
-    <button onclick="window.location.href='https://w3docs.com';">Total Death by Month in Illinois</button>
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart.html';">Total Death by Month in Illinois</button>
 </div>
 <div id="text">
-    <p1>https://worldpopulationreview.com/country-rankings/gun-deaths-by-country</p1>
+    <p1>https://efsgv.org/state/illinois/</p1>
 </div>
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
@@ -31,7 +31,7 @@
         .attr("transform", `translate(${margin.left},${margin.top})`);
     
     //Read the data
-    d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
+    d3.csv("https://raw.githubusercontent.com/dahyunl2/CS416_Narrative_Visualization/main/illinois.csv",
       // When reading the csv, I must format variables:
       function(d){
         return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
