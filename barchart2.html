@@ -3,14 +3,37 @@
 <html>
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v6.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<h1>Total Gun Deaths by Country 2023</h1>
+<div id="button">
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/';">Top 10 Country</button>
+    <button onclick="window.location.href='https://w3docs.com';">Top 10 States in U.S.</button>
+    <button onclick="window.location.href='https://w3docs.com';">Total Death by Month in Illinois</button>
+</div>
+<div id="text">
+    <p1>hello</p1>
+</div>
+
 
 <!-- Create a div where the graph will take place -->
+
 <div id="my_dataviz"></div>
+<style>
+    #tooltip{
+        opacity:0;
+        position: absolute;
+        text-align: center;
+        width: 60px;
+        height: 40px;
+        background: white;
+        border: 0px;
+    }
+</style>
 <body>
 <script>
 
     // set the dimensions and margins of the graph
-    const margin = {top: 100, right: 30, bottom: 40, left: 100},
+    const margin = {top: 20, right: 30, bottom: 40, left: 100},
         width = 700 ,
         height = 400 ;
     
@@ -27,7 +50,7 @@
     
       // Add X axis
       const x = d3.scaleLinear()
-        .domain([0, 13000])
+        .domain([0, 52000])
         .range([ 0, width]);
       svg.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -43,6 +66,12 @@
         .padding(.1);
       svg.append("g")
         .call(d3.axisLeft(y))
+
+    // create a tooltip
+    var tooltip=d3.select('#tooltip');
+
+
+    // Three function that change the tooltip when user hover / move / leave a cell
     
       //Bars
       svg.selectAll("myRect")
@@ -52,8 +81,16 @@
         .attr("y", d => y(d.Country))
         .attr("width", d => x(d.Value))
         .attr("height", y.bandwidth())
-        .attr("fill", "#69b3a2")
+        .attr("fill", "lightblue")
+        .on('mouseover', function(d){
+            tooltip.style('opacity',1)
+            .style('left',(d.pageX)+'px')
+            .style('top',(d.pageY)+'px')
+            .html('Country: '+d.Country+'\nTotal Death: '+d.Value);
+        })
+        .on('mouseout',function(){tooltip.style('opacity',0)})
     
+        svg.selectAll('rect:nth-child(2)').attr('fill','red');
     })
     
 </script>
