@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- tooltip, rect하나만 색바꾸거나  -->
 <meta charset="utf-8">
 <html>
 <!-- Load d3.js -->
@@ -6,12 +7,12 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <h1>Total Gun Deaths by Country 2023</h1>
 <div id="button">
-  <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/';">Top 10 Country</button>
-  <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/piechart3.html';">Top 10 States in U.S.</button>
-  <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart.html';">Total Death by Month in Illinois</button>
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/';">Top 10 Country</button>
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/piechart3.html';">Top 10 States in U.S.</button>
+    <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart.html';">Gun Death Rate by year in Illinois</button>
 </div>
 <div id="text">
-    <p1>https://worldpopulationreview.com/country-rankings/gun-deaths-by-country</p1>
+    <p1>hello</p1>
 </div>
 
 
@@ -81,7 +82,14 @@
         .attr("y", d => y(d.Country))
         .attr("width", d => x(d.Value))
         .attr("height", y.bandwidth())
-        .attr("fill", "lightblue")
+        .attr("fill",function (d) {
+            if (d.Country == 'United States') {
+                return "red"
+            }
+            else {
+                return 'lightblue'
+            }
+          })
         .on('mouseover', function(d){
             tooltip.style('opacity',1)
             .style('left',(d.pageX)+'px')
@@ -89,8 +97,9 @@
             .html('Country: '+d.Country+'\nTotal Death: '+d.Value);
         })
         .on('mouseout',function(){tooltip.style('opacity',0)})
-    
-        svg.selectAll('rect:nth-child(2)').attr('fill','red');
+        
+        //svg.select('rect').filter().attr('fill','red');
+        // svg.selectAll('rect:nth-child(2)').attr('fill','red');
     })
     
 </script>
