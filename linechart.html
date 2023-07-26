@@ -14,8 +14,8 @@
     <button onclick="window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart.html';">Total Death by Month in Illinois</button>
 </div>
 <div id="text">
-    <p1>Data from https://efsgv.org/state/illinois/<br>You can see the detail of each state by put your mouse on each circle(marker).</p1>
-    <p>This is the scatterplot of Gun related death rate per 100K pop. by year.</p>
+    <p1>Data from https://efsgv.org/state/illinois/<br>You can see the detail of each state by put your mouse on each circle(marker).<br>This is the scatterplot of Gun related death rate per 100K pop. by year.</p1>
+    <!-- <p></p> -->
 </div>
 <div class="annotation">After the dramatic increase of Gun Death in 2016, <br>the rate of Gun Death has been a great number until 2019 <br> according to the data from EFSGV. <br>This increasment shows the need of improvement on gun policies. </div>
 
@@ -70,12 +70,25 @@
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
+            svg.append("text") 
+            .attr("class", "x label")
+            .attr("text-anchor", "end")
+            .attr("x", width)
+            .attr("y", height - 6)
+            .text("year");
         // Add Y axis
         const y = d3.scaleLinear()
           .domain( [0, 15])
           .range([ height, 0 ]);
         svg.append("g")
           .call(d3.axisLeft(y));
+          svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Gun Death Rate per 100K");
         // Add the line
         svg.append("path")
           .datum(data)
@@ -107,7 +120,7 @@
             .on('mouseover', function(event, d){
             tooltip
             .style("opacity", 1)
-            .html("Year: " + d.date+ "<br>Death Rate: "+d.value+'per 100K')
+            .html("Year: " + d.date+ "<br>Death Rate: "+d.value+' per 100K')
             .style("left", (d3.pointer(event,this)[0]+20) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
             .style("top", (d3.pointer(event,this)[1]+200) + "px")
                 console.log(d);
