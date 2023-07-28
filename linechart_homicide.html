@@ -28,21 +28,21 @@
     </div>
     <button class="btn btn-primary" type="button" id="search" onclick="getChange()">search</button>
 
-<div class="annotation">After the dramatic increase of Gun Death in 2016, <br>the rate of Gun Death has been a great number until 2019 <br> according to the data from EFSGV. <br>This increasment shows the need of improvement on gun policies. </div>
+<div class="annotation">After the dramatic increase of Gun Death in 2016, <br>the rate of Gun Death has been a great number until 2019 <br> according to the data from EFSGV. <br>The homicide death has the similar trend with the total death. </div>
 
 <span class="arrow"><big><big><big><big>&#8598;</big></big></big></big></span>
 <style>
   .annotation {
     position: absolute;
-    top: 38%;
-    left: 28%;
+    top: 500px;
+    left: 500px;
     color: red;
     transform: translate(-50%, -50%);
   }
   .arrow{
     position: absolute;
-    top: 32%;
-    left: 22%;
+    top: 450px;
+    left: 400px;
     color: red;
     width: '400px';
     height: '400px';
@@ -146,7 +146,7 @@
             tooltip
             .style("opacity", 1)
             .html("Year: " + d.date+ "<br>Death Rate: "+d.value+' per 100K')
-            .style("left", (d3.pointer(event,this)[0]+20) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+            .style("left", (d3.pointer(event,this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
             .style("top", (d3.pointer(event,this)[1]+200) + "px")
                 console.log(d);
             })
