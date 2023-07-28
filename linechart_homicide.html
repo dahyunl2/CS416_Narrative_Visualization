@@ -4,7 +4,7 @@
 <head>
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <h1>Total Gun Deaths Rate by Month in Illinois 2010-2019</h1>
+    <h1>Homicide Gun Deaths Rate by Month in Illinois 2010-2019</h1>
 </head>
 <!-- Load d3.js -->
 <body>
@@ -66,7 +66,7 @@
             window.location.href='https://dahyunl2.github.io/CS416_Narrative_Visualization/linechart_suicide.html';
         }
     }
-    
+
     // set the dimensions and margins of the graph
     const margin = {top: 30, right: 30, bottom: 30, left: 60},
         width = 460 - margin.left - margin.right,
@@ -81,7 +81,7 @@
         .attr("transform", `translate(${margin.left},${margin.top})`);
     
     //Read the data
-    d3.csv("https://raw.githubusercontent.com/dahyunl2/CS416_Narrative_Visualization/main/illinois.csv",
+    d3.csv("https://raw.githubusercontent.com/dahyunl2/CS416_Narrative_Visualization/main/homicide.csv",
       // When reading the csv, I must format variables:
       function(d){
         return { date : d.date, value : d.value }
